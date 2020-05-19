@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MTrack-Tracks Your Money</title>
+  <link rel="icon" href="../MY-SITE/avataaars.ico">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <nav class="navbar sticky-top navbar-dark bg-primary">
+    <a class="navbar-brand mb-0 h1" href="index.html">
+      <img src="../MY-SITE/avataaars.svg" width="30" height="30" class="d-inline-block align-top" alt="LOGO"
+        loading="lazy">
+      MTrack-Tracks Your Money
+    </a>
+    <span class="navbar-brand mb-0 h1" id ="headingText"></span>
+  </nav>
+
+  <div class="container-fluid" style="background-color: #ffffff; min-height: 100vh;">
+    <div class="container">
+      <div class="jumbotron mt-4">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">Category</span>
+          </div>
+          <input type="text" id="inputDesc" class="form-control" placeholder="Category" aria-label="Category"
+            aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="number" id="inputValue" class="form-control" placeholder="Amount" aria-label="Amount"
+            aria-describedby="basic-addon1">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon1">@</span>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Description</span>
+          </div>
+          <textarea class="form-control" placeholder="optional" aria-label="With textarea"></textarea>
+          <div class="input-group-append">
+            <button id="btnCounter" class="btn btn-outline-primary" type="button" id="button-addon2">Add</button>
+          </div>
+        </div>
+
+      </div>
+
+      <div>
+        <ul class="list-group" id="tableText">
+          <!-- <li class="list-group-item d-flex justify-content-between">
+            <h1 id="headingText"></h1>
+          </li> -->
+          <!-- <li class="list-group-item d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              Tshirt
+              <small class="text-muted">March 11, 2019</small>
+            </div>
+            <div>
+              <span class="px-5">
+                500
+              </span>
+              <button type="button" class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-trash-alt"></i>
+
+              </button>
+            </div>
+          </li> -->
+          <!-- <li class="list-group-item d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              Movie
+              <small class="text-muted">Feb 12, 2019</small>
+            </div>
+            <div>
+              <span class="px-5">
+                1500
+              </span>
+              <button type="button" class="btn btn-outline-danger btn-sm">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </li> -->
+        </ul>
+      </div>
+
+
+      <!-- <div>
+        <h1 id="headingText"></h1>
+         <div id="tableText"></div>
+
+
+      </div> -->
+    </div>
+  </div>
+  <!-- <h1 id="headingText"></h1> -->
+  <!-- <input id="inputDesc">
+    <input id="inputValue">
+    <button id="btnCounter">+</button>
+    <div id="tableText"> -->
+
+  <!-- </div> -->
+  <script>
+    function renderList(arrofList)
+      {
+         TotalExpense = 0;
+        const dataHTML = arrofList.map(items =>createListView(items));
+        const dataJoin = dataHTML.join("")
+        for(let i =0;i<arrofList.length;i++)
+          {
+            TotalExpense = TotalExpense + arrofList[i].value;
+          }
+         
+      
+      const dispText = `Total Expense Amount = ${TotalExpense}`;
+      headingE.textContent = dispText;
+          
+        tableEl.innerHTML = dataJoin;
+        arr = arrofList;
+      }
+    function deleteItem(dateValue)
+      {
+        const newArr = []
+        for(let i=0;i<arr.length;i++)
+        {
+          if(arr[i].moment.valueOf() !== dateValue)
+          {
+            newArr.push(arr[i]);
+            console.log("Pushed");
+          }
+        }
+        
+        renderList(newArr);
+        
+      }
+      function createListView({ Description,value,moment})
+      {
+        return `
+        <li class="list-group-item d-flex justify-content-between">
+            <div class="d-flex flex-column">
+              ${Description}
+              <small class="text-muted">${getDateString(moment)}</small>
+            </div>
+            <div>
+              <span class="px-5">
+                ${value}
+              </span>
+              <button type="button" 
+              class="btn btn-outline-danger btn-sm"
+              onclick="deleteItem(${moment.valueOf()})"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </li>`;
+      }
+      function getDateString(moment)
+      { 
+        return `${moment.toLocaleDateString('en-us',{year:'numeric',month:'long',day:'numeric'})}`;
+      }
+      
+    let TotalExpense = 0;
+    const headingE = document.querySelector('#headingText');
+    const inputDesc = document.querySelector('#inputDesc');
+    const inputValue1 = document.querySelector('#inputValue');
+    const tableEl = document.querySelector('#tableText');
+    headingE.textContent = TotalExpense;
+
+    let arr = [];
+    function counterInc() {
+      console.log(inputDesc.value)
+      console.log(inputValue1.value);
+      const inpInt = parseInt(inputValue1.value);
+      TotalExpense = TotalExpense + inpInt;
+      console.log(TotalExpense);
+
+      let expense = {}
+      expense.Description = inputDesc.value;
+      expense.value = inpInt;
+      expense.moment = new Date();
+      expense.TotalExpense = TotalExpense;
+      arr.push(expense);
+      const dispText = `Total Expense Amount = ${TotalExpense}`;
+      headingE.textContent = dispText;
+      console.clear();
+      console.table(arr)
+      renderList(arr);
+      //const dataHTML = arr.map(items =>createListView(items));
+      // // return `<div>${items.Description} || ${items.value}</div>`
+      // console.log(dataHTML)
+      //const dataJoin = dataHTML.join("")
+      //console.log(dataJoin);
+
+      // // const data1 = arr[0];
+
+      // // const data2 = arr[1];
+      // // const data1Text = `${data1.Description} :: ${data1.value}`;
+      // // const data2Text = `${data2.Description} :: ${data2.value}`;
+      // // const tableTextEl = `
+      // //     <div>${data1Text}</div>
+      // //     <div>${data2Text}</div>
+
+      // // `
+      //tableEl.innerHTML = dataJoin;
+      
+      
+      
+
+    }
+
+
+    const Element = document.querySelector('#btnCounter');
+    console.log(Element);
+    Element.addEventListener("click", counterInc, false);
+
+  </script>
+
+</body>
+
+</html>
